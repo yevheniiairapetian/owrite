@@ -25,8 +25,7 @@ and location data.
 ## Clone and Preview:
 To clone the repo use the following command:
 ```console git clone git@github.com:yevheniiairapetian/owrite.git```
-Or download directly by clicking on <> Code button > Download ZIP. Then open the index.html file to view the app in your browser.
-To run the app navigate to the directory:
+Or download directly by clicking on <> Code button > Download ZIP. To run the app navigate to the directory:
 ```cd chat-app```
 
 Install the required dependencies:
