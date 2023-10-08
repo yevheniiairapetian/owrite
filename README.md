@@ -26,7 +26,7 @@ and location data.
 To clone the repo use the following command:
 ```console git clone git@github.com:yevheniiairapetian/owrite.git```
 Or download directly by clicking on <> Code button > Download ZIP. To run the app navigate to the directory:
-```cd chat-app```
+```cd owrite```
 
 Install the required dependencies:
 ```npm install```
@@ -37,5 +37,5 @@ Run the App:
 ## Contact:
 Feel free to contact me via[ LinkedIn](https://www.linkedin.com/in/yevhenii-airapetian/) or  
 [email](mailto:sonkozhenia11@gmail.com) or 
-via the contact information on the [website](https://yevheniiairapetian.github.io/portfolio-website/contact.html)! 
+via the contact information on the [website](https://yevheniiairapetian.github.io/portfolio-website/contact.html) 
 Have a nice day!
