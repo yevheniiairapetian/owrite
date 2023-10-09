@@ -177,15 +177,19 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50 / 2,
   },
+  // first chat bg button color
   chatBg1: {
     backgroundColor: '#090C08',
   },
+  // second chat bg button color
   chatBg2: {
     backgroundColor: '#474056',
   },
+  // third chat bg button color
   chatBg3: {
     backgroundColor: '#707070',
   },
+  // fourth chat bg button color
   chatBg4: {
     backgroundColor: '#cb4343',
   },
