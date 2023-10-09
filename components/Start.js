@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, ImageBackground, View, Text, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, ImageBackground, View, Text, TextInput } from 'react-native';
 
 const Start = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -8,61 +8,77 @@ const Start = ({ navigation }) => {
   //state for changing the bg color of chat screen
   return (
     <ImageBackground source={require('../assets/BackgroundImage.png')} resizeMode="cover" style={styles.image}>
-    {/* background image of start screen */}
+      {/* background image of start screen */}
       <View style={styles.container}>
-      {/* container of whole start screen */}
+        {/* container of whole start screen */}
         <View style={[styles.sectionsRow, styles.headingSection]}>
-        {/* container of heading section */}
+          {/* container of heading section */}
           <Text style={styles.heading}>OWrite</Text>
         </View>
         {/* container of chat sections */}
         <View style={styles.chatWrapper}>
-        {/* text input for users name */}
+          {/* text input for users name */}
           <TextInput
             style={styles.textInput}
             value={name}
             onChangeText={setName}
             placeholder='Your Name'
+            accessibilityLabel="input"
+            accessible={true}
+            accessibilityHint="Allows you to enter your name."
+
           />
           <Text style={styles.colorsHeading}>Choose Background Color</Text>
           {/* text section for choosing bg colors */}
           <View style={styles.sectionsRow}>
-          {/* start bg color 1 button */}
+            {/* start bg color 1 button */}
             <TouchableOpacity
               style={[styles.chatBg, styles.chatBg1]}
               bgColor={'#090C08'}
               onPress={() => setbgColor('#090C08')}
-              
+              accessible={true}
+              accessibilityLabel="Tap me!"
+              accessibilityHint="Changes the background color of the chat room's screen to black color."
+              accessibilityRole="button"
 
             >
             </TouchableOpacity>
-{/* end bg color 1 button */}
-{/* start bg colot 2 button */}
+            {/* end bg color 1 button */}
+            {/* start bg color 2 button */}
             <TouchableOpacity
               style={[styles.chatBg, styles.chatBg2]}
               bgColor={'#474056'}
               onPress={() => setbgColor('#474056')}
-              
+              accessible={true}
+              accessibilityLabel="Tap me!"
+              accessibilityHint="Changes the background color of the chat room's screen to purple color."
+              accessibilityRole="button"
 
             >
             </TouchableOpacity>
             {/* end bg color 2 button */}
-{/* start bg color 3 button */}
+            {/* start bg color 3 button */}
             <TouchableOpacity
               style={[styles.chatBg, styles.chatBg3]}
-              bgColor={'#8A95A5'}
-              onPress={() => setbgColor('#8A95A5')}
-              
+              bgColor={'#707070'}
+              onPress={() => setbgColor('#707070')}
+              accessibilityLabel="Tap me!"
+              accessibilityHint="Changes the background color of the chat room's screen to grey color."
+              accessibilityRole="button"
+
 
             >
             </TouchableOpacity>
             {/* end bg color 3 button */}
-{/* start bg color 4 button */}
+            {/* start bg color 4 button */}
             <TouchableOpacity
               style={[styles.chatBg, styles.chatBg4]}
-              bgColor={'#B9C6AE'}
-              onPress={() => setbgColor('#B9C6AE')}
-              
+              bgColor={'#cb4343'}
+              onPress={() => setbgColor('#cb4343')}
+              accessible={true}
+              accessibilityLabel="Tap me!"
+              accessibilityHint="Changes the background color of the chat room's screen to red-pinkish color."
+              accessibilityRole="button"
 
             >
             </TouchableOpacity>
@@ -71,14 +87,21 @@ const Start = ({ navigation }) => {
           {/* end for bg colors buttons section */}
           {/* start chat button */}
           <TouchableOpacity
-          style={styles.chatButton}
-          onPress={() => navigation.navigate('Chat', { name: name, backgroundColor: bgColor})}
-        >
-          <Text style={styles.chatButtonText}>Start Chatting</Text>
-        </TouchableOpacity>
-        {/* end chat button */}
+            style={styles.chatButton}
+            onPress={() => navigation.navigate('Chat', { name: name, backgroundColor: bgColor })}
+            accessible={true}
+            accessibilityLabel="Tap me!"
+            accessibilityHint="Navigates to the chat room screen."
+            accessibilityRole="button"
+            accessibilityLanguage="en-US"
+          >
+            <Text style={styles.chatButtonText}>Start Chatting</Text>
+          </TouchableOpacity>
+          {/* end chat button */}
         </View>
         {/* end chat sections container */}
+        {/* this is a fix for displaying the text input field on Android devices as it should be  */}
+        {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
 
       </View>
       {/* end container  */}
@@ -103,17 +126,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: '300',
     fontSize: 16,
-    
+
 
 
 
   },
-  chatWrapper:{
+  chatWrapper: {
     flexDirection: 'column',
     backgroundColor: '#FFFFFF',
-    padding: 20,
+    paddingTop: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+    paddingLeft: 20,
     width: '88%',
-    height:'54%',
+    height: '200',
   },
   heading: {
     fontSize: 45,
@@ -158,10 +184,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#474056',
   },
   chatBg3: {
-    backgroundColor: '#8A95A5',
+    backgroundColor: '#707070',
   },
   chatBg4: {
-    backgroundColor: '#B9C6AE',
+    backgroundColor: '#cb4343',
   },
   image: {
     flex: 1,
