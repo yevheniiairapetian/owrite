@@ -26,7 +26,6 @@ const Start = ({ navigation }) => {
             accessibilityLabel="input"
             accessible={true}
             accessibilityHint="Allows you to enter your name."
-
           />
           <Text style={styles.colorsHeading}>Choose Background Color</Text>
           {/* text section for choosing bg colors */}
@@ -40,7 +39,6 @@ const Start = ({ navigation }) => {
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to black color."
               accessibilityRole="button"
-
             >
             </TouchableOpacity>
             {/* end bg color 1 button */}
@@ -53,7 +51,6 @@ const Start = ({ navigation }) => {
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to purple color."
               accessibilityRole="button"
-
             >
             </TouchableOpacity>
             {/* end bg color 2 button */}
@@ -65,8 +62,6 @@ const Start = ({ navigation }) => {
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to grey color."
               accessibilityRole="button"
-
-
             >
             </TouchableOpacity>
             {/* end bg color 3 button */}
@@ -79,7 +74,6 @@ const Start = ({ navigation }) => {
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to red-pinkish color."
               accessibilityRole="button"
-
             >
             </TouchableOpacity>
             {/* end bg olor 4 button */}
@@ -102,12 +96,10 @@ const Start = ({ navigation }) => {
         {/* end chat sections container */}
         {/* this is a fix for displaying the text input field on Android devices as it should be  */}
         {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
-
       </View>
       {/* end container  */}
     </ImageBackground>
     // end background image of start screen
-
   );
 }
 // styles for start screen
@@ -116,8 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-
-
   },
   colorsHeading: {
     color: '#757083',
@@ -126,10 +116,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: '300',
     fontSize: 16,
-
-
-
-
   },
   chatWrapper: {
     flexDirection: 'column',
@@ -145,14 +131,9 @@ const styles = StyleSheet.create({
     fontSize: 45,
     color: '#FFFFFF',
     fontWeight: '600',
-
-
-
   },
   sectionsRow: {
     flexDirection: 'row',
-
-
   },
   chatButton: {
     width: 320,
@@ -163,13 +144,10 @@ const styles = StyleSheet.create({
     marginTop: 40,
     fontSize: 16,
     fontWeight: '600',
-
   },
   chatButtonText: {
     color: '#FFFFFF',
     textAlign: 'center',
-
-
   },
   chatBg: {
     marginRight: 25,
