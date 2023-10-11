@@ -1,15 +1,67 @@
-import { GiftedChat, Bubble } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
-import { useEffect, useState } from 'react';
-import { collection, addDoc, onSnapshot,query, orderBy } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // chat screen functional component
 // extract props from app
-const Chat = ({ route, navigation, db }) => {
+const Chat = ({ route, navigation, db, isConnected }) => {
   //here user name, user id, and chat screen background color are changed
   const { name, backgroundColor, userID } = route.params;
 
   // here messages state is changed
   const [messages, setMessages] = useState([]);
+
+  // prevent memory leak variable init
+  let unsubMessages;
+
+  useEffect(() => {
+    // setting user name in the chat
+    navigation.setOptions({ title: name });
+// if internet connection is true
+    if (isConnected === true) {
+// clear call back function
+      if (unsubMessages) unsubMessages();
+      unsubMessages = null;
+// pushing new messages to db
+      const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+        unsubMessages = onSnapshot(q, (docs) => {
+        let newMessages = [];
+        docs.forEach(doc => {
+          newMessages.push({
+            id: doc.id,
+            ...doc.data(),
+            createdAt: new Date(doc.data().createdAt.toMillis())
+          })
+        })
+        // setting cached meessages if internet connection is lost
+        cachedMessages(newMessages);
+        setMessages(newMessages);
+      })
+      // loading messages from firestore if internet connection is present
+    } else loadCachedMessages();
+// prevent memory leaks
+    return () => {
+      if (unsubMessages) unsubMessages();
+    }
+    // dependency array checking internet connection
+  }, [isConnected]);
+
+  // load cached messages from local storage and parse them
+  const loadCachedMessages = async () => {
+    const cachedMessages = await AsyncStorage.getItem("messages") || [];
+    setMessages(JSON.parse(cachedMessages));
+  }
+// try to set messages with cached messages 
+  const cachedMessages = async (messagesToCache) => {
+    try {
+      await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+
 
   //appends new messages to the array of old ones
   const onSend = (newMessages) => {
@@ -31,55 +83,37 @@ const Chat = ({ route, navigation, db }) => {
       }}
     />
   }
-  //creates a test example with a test user and message as by GiftedChat requirements
 
+  // conditional to hide/show send button and yexy field if connection is lost/present
+  const renderInputToolbar = (props) => {
+    if (isConnected === true) 
+    return <InputToolbar 
+    {...props} />;
+    else return null;
+  }
 
-
-  
-  useEffect(() => {
-    
-  //set username in title
-    navigation.setOptions({ title: name });
-      // query firestore database and create messages
-    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-    const unsubMessages = onSnapshot(q, (docs) => {
-      let newMessages = [];
-      docs.forEach(doc => {
-        newMessages.push({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: new Date(doc.data().createdAt.toMillis())
-        })
-      })
-      setMessages(newMessages);
-    })
-    return () => {
-      // clean up to avoid memory leaks
-      if (unsubMessages) unsubMessages();
-    }
-   }, []);
-
-  return (
-    // chat screen
-    <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-      <GiftedChat
-        messages={messages}
-        renderBubble={renderBubble}
-        onSend={messages => onSend(messages)}
-        // accessibility props
-        accessibilityLabel="input"
-        accessible={true}
-        accessibilityHint="Allows you to send a new message."
-        // set user id and name
-        user={{
-          _id: userID,
-          name: name,
-        }}
-      />
-      {/* this is a fix for displaying the text input field on Android devices as it should be  */}
-      {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
-    </View>
-  );
+return (
+  // chat screen
+  <View style={[styles.container, { backgroundColor: backgroundColor }]}>
+    <GiftedChat
+      messages={messages}
+      renderBubble={renderBubble}
+      onSend={messages => onSend(messages)}
+      renderInputToolbar={renderInputToolbar}
+      // accessibility props
+      accessibilityLabel="input"
+      accessible={true}
+      accessibilityHint="Allows you to send a new message."
+      // set user id and name
+      user={{
+        _id: userID,
+        name: name,
+      }}
+    />
+    {/* this is a fix for displaying the text input field on Android devices as it should be  */}
+    {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+  </View>
+);
 }
 
 // styles for chat screen
