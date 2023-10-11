@@ -1,7 +1,22 @@
 import { useState } from 'react';
-import { StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, ImageBackground, View, Text, TextInput } from 'react-native';
+import { getAuth, signInAnonymously } from "firebase/auth";
+import { StyleSheet, TouchableOpacity, KeyboardAvoidingView, Alert, Platform, ImageBackground, View, Text, TextInput } from 'react-native';
 
+// start screen functional component
 const Start = ({ navigation }) => {
+  // authentication for firebase
+  const auth = getAuth();
+// anonymous authentication
+  const signInUser = () => {
+    signInAnonymously(auth)
+      .then(result => {
+        navigation.navigate("Chat", { userID: result.user.uid, name:name, backgroundColor:bgColor });
+        Alert.alert("Signed in Successfully!");
+      })
+      .catch((error) => {
+        Alert.alert("Unable to sign in, try later again.");
+      })
+  }
   const [name, setName] = useState('');
   //state for changing th users name
   const [bgColor, setbgColor] = useState('');
@@ -23,6 +38,7 @@ const Start = ({ navigation }) => {
             value={name}
             onChangeText={setName}
             placeholder='Your Name'
+            // accessibility props
             accessibilityLabel="input"
             accessible={true}
             accessibilityHint="Allows you to enter your name."
@@ -35,6 +51,7 @@ const Start = ({ navigation }) => {
               style={[styles.chatBg, styles.chatBg1]}
               bgColor={'#090C08'}
               onPress={() => setbgColor('#090C08')}
+              // accessibility props
               accessible={true}
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to black color."
@@ -47,6 +64,7 @@ const Start = ({ navigation }) => {
               style={[styles.chatBg, styles.chatBg2]}
               bgColor={'#474056'}
               onPress={() => setbgColor('#474056')}
+              // accessibility props
               accessible={true}
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to purple color."
@@ -59,6 +77,7 @@ const Start = ({ navigation }) => {
               style={[styles.chatBg, styles.chatBg3]}
               bgColor={'#707070'}
               onPress={() => setbgColor('#707070')}
+              // accessibility props
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to grey color."
               accessibilityRole="button"
@@ -70,6 +89,7 @@ const Start = ({ navigation }) => {
               style={[styles.chatBg, styles.chatBg4]}
               bgColor={'#cb4343'}
               onPress={() => setbgColor('#cb4343')}
+              // accessibility props
               accessible={true}
               accessibilityLabel="Tap me!"
               accessibilityHint="Changes the background color of the chat room's screen to red-pinkish color."
@@ -82,7 +102,9 @@ const Start = ({ navigation }) => {
           {/* start chat button */}
           <TouchableOpacity
             style={styles.chatButton}
-            onPress={() => navigation.navigate('Chat', { name: name, backgroundColor: bgColor })}
+            // sing in user anonymously on button press
+            onPress={signInUser}
+            // accessibility props
             accessible={true}
             accessibilityLabel="Tap me!"
             accessibilityHint="Navigates to the chat room screen."
@@ -136,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   chatButton: {
-    width: 320,
+    width: 298,
     height: 50,
     color: '#FFFFFF',
     backgroundColor: '#757083',
@@ -178,7 +200,7 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: 'white',
     borderColor: '#474056',
-    width: 320,
+    width: 298,
     fontSize: 16,
     fontWeight: '300',
     padding: 15,
