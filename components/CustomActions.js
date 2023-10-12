@@ -76,7 +76,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, userID })
     // this function will show additional features box
     const onActionPress = () => {
         // options for button near the text input box
-        const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Record a Sound', 'Cancel'];
+        const options = ['Choose a Photo', 'Take a Photo', 'Share Location', 'Record a Sound', 'Cancel'];
         const cancelButtonIndex = options.length - 1;
         actionSheet.showActionSheetWithOptions(
             {
