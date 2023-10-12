@@ -1,11 +1,12 @@
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
-import { StyleSheet, View, Button, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import CustomActions from './CustomActions';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
+import { Audio } from "expo-av"
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 // chat screen functional component
@@ -17,12 +18,14 @@ const Chat = ({ route, navigation, db, storage, isConnected }) => {
   // here messages state is changed
   const [messages, setMessages] = useState([]);
 
-  // uri image source state for the user to select an image
+  // sound variable
+  let soundObject = null;
 
 
-  // state for holding the user's location
 
 
+
+// render user location with a map
 
   const renderCustomView = (props) => {
     const { currentMessage } = props;
@@ -77,6 +80,8 @@ const Chat = ({ route, navigation, db, storage, isConnected }) => {
     // prevent memory leaks
     return () => {
       if (unsubMessages) unsubMessages();
+      if (soundObject) soundObject.unloadAsync();
+
     }
     // dependency array checking internet connection
   }, [isConnected]);
@@ -117,8 +122,33 @@ const Chat = ({ route, navigation, db, storage, isConnected }) => {
       }}
     />
   }
+  // message bubble with audio recording
 
-  // conditional to hide/show send button and yexy field if connection is lost/present
+  const renderAudioBubble = (props) => {
+    return <View {...props}>
+      <TouchableOpacity
+        style={{
+          backgroundColor: "#FF0", borderRadius: 10, margin: 5
+        }}
+        onPress={async () => {
+          if (soundObject) soundObject.unloadAsync();
+          const { sound } = await Audio.Sound.createAsync({
+            uri:
+              props.currentMessage.audio
+          });
+          soundObject = sound;
+          await sound.playAsync();
+        }}>
+        <Text style={{
+          textAlign: "center", color: 'black', padding:
+            5
+        }}>Play Sound</Text>
+      </TouchableOpacity>
+    </View>
+  }
+
+
+  // conditional to hide/show send button and text field if connection is lost/present
   const renderInputToolbar = (props) => {
     if (isConnected === true)
       return <InputToolbar
@@ -141,6 +171,8 @@ const Chat = ({ route, navigation, db, storage, isConnected }) => {
         renderActions={renderCustomActions}
         renderCustomView={renderCustomView}
         renderBubble={renderBubble}
+        renderMessageAudio={renderAudioBubble}
+
         // accessibility props
         accessibilityLabel="input"
         accessible={true}
