@@ -4,10 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import CustomActions from './CustomActions';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as ImagePicker from 'expo-image-picker';
-import * as MediaLibrary from 'expo-media-library';
 import { Audio } from "expo-av"
-import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 // chat screen functional component
 // extract props from app
@@ -157,7 +154,7 @@ const Chat = ({ route, navigation, db, storage, isConnected }) => {
   }
   // circular button to access additional features (upload, take image, geolocation)
   const renderCustomActions = (props) => {
-    return <CustomActions storage={storage} {...props} />;
+    return <CustomActions userID={userID} storage={storage} {...props} />;
   };
 
   return (
