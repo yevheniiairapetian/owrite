@@ -10,8 +10,8 @@ This repo contains a chat app called OWrite for mobile devices developed using R
 - share the location
 - make an audio recording, send it and play it
 
-![Screenshot of a chat app](https://ibb.co/zn4STKT)
-![Screenshot of a chat app](https://ibb.co/JmcqH6W)
+![Screenshot of a chat app]([assets/2023-10-12_22h07_10.png])
+![Screenshot of a chat app]([assets/2023-10-12_22h15_08.png])
 
 ## Key Features
 - A screen where users can enter their name and choose a background color for the chat screen before joining the chat.
