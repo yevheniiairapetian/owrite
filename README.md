@@ -33,7 +33,8 @@ This repo contains a chat app called OWrite for mobile devices developed using R
 ## Clone and Preview:
 To clone the repo use the following command:
 ```console git clone git@github.com:yevheniiairapetian/owrite.git```
-Or download directly by clicking on <> Code button > Download ZIP. To run the app on a physical device:
+Or download directly by clicking on <> Code button > Download ZIP. 
+To run the app on a physical device:
 - Run ```npm install - expo-cli``` globally
 - Install/open the Expo Go app
 - Create an account/login to Expo app
