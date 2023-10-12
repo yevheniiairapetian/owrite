@@ -6,11 +6,11 @@ import { StyleSheet, TouchableOpacity, KeyboardAvoidingView, Alert, Platform, Im
 const Start = ({ navigation }) => {
   // authentication for firebase
   const auth = getAuth();
-// anonymous authentication
+  // anonymous authentication
   const signInUser = () => {
     signInAnonymously(auth)
       .then(result => {
-        navigation.navigate("Chat", { userID: result.user.uid, name:name, backgroundColor:bgColor });
+        navigation.navigate("Chat", { userID: result.user.uid, name: name, backgroundColor: bgColor });
         Alert.alert("Signed in Successfully!");
       })
       .catch((error) => {

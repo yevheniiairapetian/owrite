@@ -1,31 +1,65 @@
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
-import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, View, Button, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import CustomActions from './CustomActions';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from 'expo-image-picker';
+import * as MediaLibrary from 'expo-media-library';
+import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
 // chat screen functional component
 // extract props from app
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, storage, isConnected }) => {
   //here user name, user id, and chat screen background color are changed
   const { name, backgroundColor, userID } = route.params;
 
   // here messages state is changed
   const [messages, setMessages] = useState([]);
 
+  // uri image source state for the user to select an image
+
+
+  // state for holding the user's location
+
+
+
+  const renderCustomView = (props) => {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{
+            width: 150,
+            height: 100,
+            borderRadius: 13,
+            margin: 3
+          }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
+  }
   // prevent memory leak variable init
   let unsubMessages;
 
   useEffect(() => {
     // setting user name in the chat
     navigation.setOptions({ title: name });
-// if internet connection is true
+    // if internet connection is true
     if (isConnected === true) {
-// clear call back function
+      // clear call back function
       if (unsubMessages) unsubMessages();
       unsubMessages = null;
-// pushing new messages to db
+      // pushing new messages to db
       const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-        unsubMessages = onSnapshot(q, (docs) => {
+      unsubMessages = onSnapshot(q, (docs) => {
         let newMessages = [];
         docs.forEach(doc => {
           newMessages.push({
@@ -40,7 +74,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       })
       // loading messages from firestore if internet connection is present
     } else loadCachedMessages();
-// prevent memory leaks
+    // prevent memory leaks
     return () => {
       if (unsubMessages) unsubMessages();
     }
@@ -52,7 +86,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     const cachedMessages = await AsyncStorage.getItem("messages") || [];
     setMessages(JSON.parse(cachedMessages));
   }
-// try to set messages with cached messages 
+  // try to set messages with cached messages 
   const cachedMessages = async (messagesToCache) => {
     try {
       await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
@@ -60,7 +94,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       console.log(error.message);
     }
   }
-  
+
 
 
   //appends new messages to the array of old ones
@@ -86,41 +120,57 @@ const Chat = ({ route, navigation, db, isConnected }) => {
 
   // conditional to hide/show send button and yexy field if connection is lost/present
   const renderInputToolbar = (props) => {
-    if (isConnected === true) 
-    return <InputToolbar 
-    {...props} />;
+    if (isConnected === true)
+      return <InputToolbar
+        {...props} />;
     else return null;
   }
+  // circular button to access additional features (upload, take image, geolocation)
+  const renderCustomActions = (props) => {
+    return <CustomActions storage={storage} {...props} />;
+  };
 
-return (
-  // chat screen
-  <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-    <GiftedChat
-      messages={messages}
-      renderBubble={renderBubble}
-      onSend={messages => onSend(messages)}
-      renderInputToolbar={renderInputToolbar}
-      // accessibility props
-      accessibilityLabel="input"
-      accessible={true}
-      accessibilityHint="Allows you to send a new message."
-      // set user id and name
-      user={{
-        _id: userID,
-        name: name,
-      }}
-    />
-    {/* this is a fix for displaying the text input field on Android devices as it should be  */}
-    {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
-  </View>
-);
+  return (
+    // chat screen
+    <View style={[styles.container, { backgroundColor: backgroundColor }]}>
+
+      <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        renderInputToolbar={renderInputToolbar}
+        renderActions={renderCustomActions}
+        renderCustomView={renderCustomView}
+        renderBubble={renderBubble}
+        // accessibility props
+        accessibilityLabel="input"
+        accessible={true}
+        accessibilityHint="Allows you to send a new message."
+        // set user id and name
+        user={{
+          _id: userID,
+          name: name,
+        }}
+      />
+
+
+
+
+      {/* this is a fix for displaying the text input field on Android devices as it should be  */}
+      {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+    </View>
+  );
 }
 
 // styles for chat screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  images: {
+    flex: 1,
+    justifyContent: 'center',
   }
+
 });
 
 export default Chat;
