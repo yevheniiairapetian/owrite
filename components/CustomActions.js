@@ -93,6 +93,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, userID })
                         return;
                     case 2:
                         getLocation();
+                        return;
                     case 3:
                         startRecording();
                         return;
