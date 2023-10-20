@@ -1,33 +1,42 @@
 # owrite
 
 ## Description:
-This repo contains a chat app called OWrite for mobile devices developed using React Native. The app provides the users with a chat interface and options to:
-- send messages
-- choose a chat room background color
-- set a name for the user for the chat room
-- share images from the device's storage
-- take a picture and share it with others
-- share the location
-- make an audio recording, send it and play it
+This repository contains a chat app called OWrite for mobile devices developed using React Native. The app provides the users with a chat interface and options to:
+- Send messages
+- Choose a chat room background color (4 options)
+- Set a username for the chat room
+- Share images from the device's storage
+- Take a picture and share it
+- Share the location
+- Make an audio recording, send it, and play it
 
 ## Key Features
-- A screen where users can enter their name and choose a background color for the chat screen before joining the chat.
+- A screen where users can enter their name and choose a background color (4 options) for the chat screen before joining the chat.
 - A page displaying the conversation, as well as an input field and a submit button.
-- The chat that provides users with additional communication features: sending images, taking photos and sending them, make audio recordings/play audio recordings, share user's geolocation information
-- Data gets stored online and offline and users can access messages when offline.
+- The chat that provides users with additional communication features: sending images, taking photos and sending them, making audio recordings/playing audio recordings, sharing user's geolocation information
+- Data gets stored online in the Google Firestore and offline in the AsyncStorage.
+- If the user is offline, they cannot write new messages but can view the chat history
+- The app was developed with accessibility measures
 
 ## Technologies Used:
 - React Native
+- AsyncStorage
 - Responsive design
+- Google Firestore
+- Android Studio
+- Expo Go
+- Expo CLI
   
 
 ## Project Dependencies:
-- React Native
-- Expo
-- Gifted Chat
-- Firebase Firestore
-- React Native Maps
-- _Please see package.json for other project dependecies_
+- React Native for native app development
+- Expo Go app for serving the app
+- Expo CLI for the terminal commands
+- AsyncStorage for offline data storage
+- Gifted Chat for the chat functionality
+- Firebase Firestore for storing user data
+- React Native Maps for sharing geolocation
+- _Please see package.json for other project dependencies_
 
 
 ## Clone and Preview:
@@ -40,7 +49,7 @@ Or download directly by clicking on <> Code button > Download ZIP.
 To run the app on a physical device:
 - Run ```npm install - expo-cli``` globally
 - Install/open the Expo Go app
-- Create an account/login to Expo app
+- Create an account/log in to Expo app
 - navigate to the project directory in the terminal: ```cd owrite```
 - Install the required dependencies: ```npm install```
 - Run the App: ```expo start```
@@ -50,10 +59,10 @@ To run the app on a physical device:
 ## Running on an Emulator
 To run the app on an emulator/simulator, install:
 - Run ```npm install - expo-cli``` globally
-- Anroid Studio to test for Android
+- Android Studio to test for Android
 - X Code to test for iOS
 - Install/open the Expo Go app
-- Create an account/login to Expo app
+- Create an account/log in to Expo app
 - navigate to the project directory in the terminal: ```cd owrite```
 - Install the required dependencies: ```npm install```
 - Run the App: ```expo start```
@@ -61,12 +70,11 @@ To run the app on an emulator/simulator, install:
 
 ## Database Setup
 To set up the database for the project:
-
-- Create an account/sign in at https://firebase.google.com/
-- install firebase in your project directory: ```npm install firebase```
-- import the firebase configuration settings from the project settings tab in the firebase console into your App.js file
-- in the firebase database rules, adjust ```allow read, write: if false;``` to ```allow read, write: if true;```
-- publish
+- Create an account/log in at https://firebase.google.com/
+- Install Firebase in your project directory: ```npm install firebase```
+- Import the Firebase configuration settings from the project settings tab in the Firebase console into your App.js file
+- In the firebase database rules, adjust ```allow read, write: if false;``` to ```allow read, write: if true;```
+- Publish
 
 ## Contact:
 Feel free to contact me via[ LinkedIn](https://www.linkedin.com/in/yevhenii-airapetian/) or  
