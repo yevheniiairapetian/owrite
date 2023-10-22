@@ -18,6 +18,12 @@ This repository contains a chat app called OWrite for mobile devices developed u
 - If the user is offline, they cannot write new messages but can view the chat history
 - The app was developed with accessibility measures
 
+## Project Screenshot
+<a href="https://ibb.co/QjpdrSY"><img src="https://i.ibb.co/vvVYZyL/2023-10-12-22h15-08.png" alt="2023-10-12-22h15-08" border="0"></a>   
+## Project In Use Preview
+_Please click on the video below to watch it_   
+[![Watch the video](https://ibb.co/QjpdrSY)](https://streamable.com/77jy2x)
+
 ## Technologies Used:
 - React Native
 - AsyncStorage
