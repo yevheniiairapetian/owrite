@@ -22,7 +22,7 @@ This repository contains a chat app called OWrite for mobile devices developed u
 <a href="https://ibb.co/QjpdrSY"><img src="https://i.ibb.co/vvVYZyL/2023-10-12-22h15-08.png" alt="2023-10-12-22h15-08" border="0"></a>   
 ## Project In Use Preview
 _Please click on the video below to watch it_   
-[![Watch the video](https://ibb.co/QjpdrSY)](https://streamable.com/77jy2x)
+[![Watch the video](https://i.ibb.co/vvVYZyL/2023-10-12-22h15-08.png)](https://streamable.com/77jy2x)
 
 ## Technologies Used:
 - React Native
