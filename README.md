@@ -84,6 +84,6 @@ To set up the database for the project:
 - Publish
 
 ## Contact:
-Feel free to contact me via[ LinkedIn](https://www.linkedin.com/in/yevhenii-airapetian/) or  
+Feel free to contact me via[ LinkedIn](https://www.linkedin.com/in/yevheniiairapetian/) or  
 [email](mailto:contact@yevheniiairapetian.com) or 
 via the contact information on the [website](https://yevheniiairapetian.github.io/portfolio-website/contact.html) 
